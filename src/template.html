@@ -6,6 +6,45 @@
     <title>Todo List</title>
 </head>
 <body>
-    
+    <div class="container">
+
+        <div class="sidebar">
+            <h1>Todo List</h1><hr>
+            <h2>Projects</h2>
+            <button id="addProject" command="show-modal" commandfor="projectDialog">Add Project</button>
+            <div class="project-container">
+                <!-- generate projects in this area -->
+                <!-- add task and delete button to be attached to project -->
+            </div>
+        </div>
+
+        <div class="main">
+            <!-- generate todos in this area -->
+            <!-- header displaying project name -->
+            <!-- window displaying all tasks under respective header -->
+            <!-- edit and delete buttons to accompany tasks -->
+        </div>
+
+        <!-- modals for opening/closing of projects/tasks -->
+        <dialog id="projectDialog">
+            <form method="dialog" id="projectForm">
+                <div id="project-name">
+                    <label for="name">Name: </label>
+                    <input type="text" id="name" name="name" required/>
+                </div>
+                <div>
+                    <button type="submit" id="submitProject">Submit</button>
+                </div>
+                <div>
+                    <button type="button" id="closeProject" command="close" commandfor="projectDialog">Close</button>
+                </div> 
+            </form>
+        </dialog>
+
+        <dialog>
+            <form></form>
+        </dialog>
+
+    </div>
 </body>
 </html>
