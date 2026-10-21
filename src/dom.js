@@ -15,33 +15,32 @@ projectForm.addEventListener('submit', (event) => {
     projectBtn.classList.add('project-btn');
     projectBtn.textContent = projectNameInput.value;
 
+    // creating todo array for each button
+    projectBtn.todos = [];
+
     projectDiv.appendChild(projectBtn);
     projectContainer.appendChild(projectDiv);
 
-    // upon project button click, display project name
-    // in main area while also producing add task button for project
-
     projectBtn.addEventListener('click', () => {
-        mainArea.innerHTML = '';
-        
-        const projectHeader = document.createElement('div');
-        projectHeader.classList.add('project-btn-header');
-        projectHeader.textContent = projectBtn.textContent;
-        mainArea.appendChild(projectHeader);
-
-        // add "add Task" button here
-        const addTaskBtn = document.createElement('button');
-        addTaskBtn.textContent = 'Add Task';
-        addTaskBtn.classList.add('task-button');
-        projectHeader.appendChild(addTaskBtn);
+        displayProjectTasks(projectBtn);
     });
  
-    // todo code goes here
     projectForm.reset();
     projectDialog.close();
 });
 
+// display task code goes here
+function displayProjectTasks(projectBtn) {
+    mainArea.innerHTML = '';
+        
+    const projectHeader = document.createElement('div');
+    projectHeader.classList.add('project-btn-header');
+    projectHeader.textContent = projectBtn.textContent;
+    mainArea.appendChild(projectHeader);
 
-// const projectBtn = document.querySelector('.project-btn');
-
-
+    // add "add Task" button here
+    const addTaskBtn = document.createElement('button');
+    addTaskBtn.textContent = 'Add Task';
+    addTaskBtn.classList.add('task-button');
+    projectHeader.appendChild(addTaskBtn);
+}
