@@ -3,6 +3,7 @@
   --mainColor: #d3d3d3;
   --buttonColor: #d2691e;
   --formButtonColor: #006400;
+  --projectColor: #d3d3d3;
 }
 
 * {
@@ -42,7 +43,7 @@ h2 {
 
 #addProject {
   display: flex;
-  margin: 0 auto 20px;
+  margin: 0 auto 50px;
   background-color: var(--buttonColor);
   color: #fff;
   font-weight: bold;
@@ -55,7 +56,18 @@ h2 {
 
 /****** project box ******/
 /******** layout *********/
+.project-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
+.project-btn {
+  background-color: var(--projectColor);
+  height: 30px;
+  font-weight: bold;
+  font-size: 18px;
+}
 
 /******* main box ********/
 /******** layout *********/
@@ -76,12 +88,6 @@ h2 {
 #projectForm {
   display: flex;
   flex-direction: column;
-}
-
-#project-name {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
 }
 
 #submitProject, #closeProject {
