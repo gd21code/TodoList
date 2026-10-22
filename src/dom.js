@@ -4,6 +4,10 @@ const projectNameInput = document.querySelector('#proj-name');
 const projectForm = document.querySelector('#projectForm');
 const projectDialog = document.querySelector('#projectDialog');
 const mainArea = document.querySelector('.main');
+const taskForm = document.querySelector('#taskForm');
+const taskDialog = document.querySelector('#taskDialog');
+
+let activeProject = null;
 
 projectForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -44,9 +48,7 @@ projectForm.addEventListener('submit', (event) => {
 
 // display task code goes here
 function displayProjectTasks(projectBtn) {
-    const taskForm = document.querySelector('#taskForm');
-    const taskDialog = document.querySelector('#taskDialog');
-    
+    activeProject = projectBtn;
     mainArea.innerHTML = '';
         
     const projectHeader = document.createElement('div');
@@ -65,30 +67,81 @@ function displayProjectTasks(projectBtn) {
     projectTodoList.classList.add('todo-list');
     mainArea.appendChild(projectTodoList);
 
+    // render other tasks added to array
+    projectBtn.todos.forEach(task => {
+        taskDisplay(task, projectTodoList, projectBtn);
+    });
+
     // when "add task" button is clicked, open task dialog
     addTaskBtn.addEventListener('click', () => {
-        taskDialog.showModal();
+        openTaskDialog();
     });
+};
 
-    // add todo to respect project array
-    taskForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-    })
+function openTaskDialog() {
+    const taskDialog = document.querySelector('#taskDialog');
+    taskDialog.showModal();
+};
 
-    // display todos of respective project
-    projectBtn.todos.forEach(todo => {
-        const todoItem = document.createElement('div');
-        todoItem.textContent = todo; // might have to change value later
-        projectTodoList.appendChild(todoItem);
-    });
-
-
-
+// task display
+function taskDisplay(task, taskContainer, project) {
     
-    // NEED DELETE BUTTON FUNCTION FOR TASK
-    // const deleteTaskBtn = document.createElement('button');
-    // deleteTaskBtn.textContent = 'Delete';
-    // deleteTaskBtn.classList.add('delete-task-button');
+    const taskDiv = document.createElement('div');
+    taskDiv.classList.add('task-block');
 
-    // delete task functionality
-}
+    const taskName = document.createElement('span');
+    taskName.textContent = task.title;
+
+    const taskDescription = document.createElement('span');
+    taskDescription.textContent = task.description;
+
+    const taskDueDate = document.createElement('span');
+    taskDueDate.textContent = `Due: ${task.dueDate}`;
+
+    const taskPriority = document.createElement('span');
+    taskPriority.textContent = task.priority;
+
+    // task delete button
+    const deleteTaskBtn = document.createElement('button');
+    deleteTaskBtn.textContent = 'Delete';
+    deleteTaskBtn.classList.add('delete-task-btn');
+
+    // task delete button functionality
+    deleteTaskBtn.addEventListener('click', () => {
+        const taskIndex = project.todos.indexOf(task);
+        if (taskIndex > -1) {
+            project.todos.splice(taskIndex, 1);
+        };
+        taskDiv.remove();
+    });
+
+    taskDiv.appendChild(taskName);
+    taskDiv.appendChild(taskDescription);
+    taskDiv.appendChild(taskDueDate);
+    taskDiv.appendChild(taskPriority);
+    taskDiv.appendChild(deleteTaskBtn);
+
+    taskContainer.appendChild(taskDiv);
+};
+// task form submission
+taskForm.addEventListener('submit', (event) => {
+
+    event.preventDefault();
+
+    const title = document.querySelector('#title').value;
+    const description = document.querySelector('#description').value;
+    const dueDate = document.querySelector('#dueDate').value;
+    const priority = document.querySelector('#priority').value;
+
+    const newTask = {title, description, dueDate, priority};
+    activeProject.todos.push(newTask);
+
+    // places todos into proper project
+    const todoContainer = document.querySelector('.todo-list');
+    if (todoContainer) {
+        taskDisplay(newTask, todoContainer, activeProject);
+    };
+
+    taskForm.reset();
+    taskDialog.close();
+});
