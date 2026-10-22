@@ -59,7 +59,14 @@ h2 {
 .project-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 20px;
+}
+
+.project-block {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .project-btn {
@@ -68,8 +75,15 @@ h2 {
   align-items: center;
   background-color: var(--projectColor);
   height: 40px;
-  width: 100%;
+  width: 80%;
   font-weight: bold;
+}
+
+.delete-project-btn {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  height: 30px;
 }
 
 /******* main box ********/

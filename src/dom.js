@@ -10,17 +10,31 @@ projectForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const projectDiv = document.createElement('div');
+    projectDiv.classList.add('project-block');
 
     const projectBtn = document.createElement('button');
     projectBtn.classList.add('project-btn');
     projectBtn.textContent = projectNameInput.value;
 
-    // creating todo array for each button
-    projectBtn.todos = [];
-
     projectDiv.appendChild(projectBtn);
     projectContainer.appendChild(projectDiv);
 
+    // delete button for projects
+    const deleteProjectBtn = document.createElement('button');
+    deleteProjectBtn.classList.add('delete-project-btn');
+    deleteProjectBtn.textContent = 'Delete';
+    projectDiv.appendChild(deleteProjectBtn);
+
+    // delete project functionality
+    deleteProjectBtn.addEventListener('click', () => {
+        mainArea.innerHTML = '';
+        projectDiv.remove();
+    });
+
+    // creating todo array for each button
+    projectBtn.todos = [];
+
+    // showcase project in main area
     projectBtn.addEventListener('click', () => {
         displayProjectTasks(projectBtn);
     });
@@ -43,4 +57,19 @@ function displayProjectTasks(projectBtn) {
     addTaskBtn.textContent = 'Add Task';
     addTaskBtn.classList.add('task-button');
     projectHeader.appendChild(addTaskBtn);
+
+    // NEED DELETE BUTTON FUNCTION FOR TASK
+    // const deleteTaskBtn = document.createElement('button');
+    // deleteTaskBtn.textContent = 'Delete';
+    // deleteTaskBtn.classList.add('delete-task-button');
+
+    // todo list container
+    const projectTodoList = document.createElement('div');
+    projectTodoList.classList.add('todo-list');
+    mainArea.appendChild(projectTodoList);
+
+    // display todos of respective project
+    
+
+    // add todo to respect project array
 }
