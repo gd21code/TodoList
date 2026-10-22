@@ -90,16 +90,16 @@ function taskDisplay(task, taskContainer, project) {
     taskDiv.classList.add('task-block');
 
     const taskName = document.createElement('span');
-    taskName.textContent = task.title;
+    taskName.textContent = `Task: ${task.title}`;
 
     const taskDescription = document.createElement('span');
-    taskDescription.textContent = task.description;
+    taskDescription.textContent = `Description: ${task.description}`;
 
     const taskDueDate = document.createElement('span');
     taskDueDate.textContent = `Due: ${task.dueDate}`;
 
     const taskPriority = document.createElement('span');
-    taskPriority.textContent = task.priority;
+    taskPriority.textContent = `Priority: ${task.priority}`;
 
     // task delete button
     const deleteTaskBtn = document.createElement('button');
