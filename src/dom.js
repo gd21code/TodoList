@@ -1,5 +1,4 @@
-// dom manip that inserts project button
-// into project container
+// dom manip that inserts project button into project container
 const projectContainer = document.querySelector('.project-container');
 const projectNameInput = document.querySelector('#proj-name');
 const projectForm = document.querySelector('#projectForm');
@@ -45,6 +44,9 @@ projectForm.addEventListener('submit', (event) => {
 
 // display task code goes here
 function displayProjectTasks(projectBtn) {
+    const taskForm = document.querySelector('#taskForm');
+    const taskDialog = document.querySelector('#taskDialog');
+    
     mainArea.innerHTML = '';
         
     const projectHeader = document.createElement('div');
@@ -58,18 +60,35 @@ function displayProjectTasks(projectBtn) {
     addTaskBtn.classList.add('task-button');
     projectHeader.appendChild(addTaskBtn);
 
-    // NEED DELETE BUTTON FUNCTION FOR TASK
-    // const deleteTaskBtn = document.createElement('button');
-    // deleteTaskBtn.textContent = 'Delete';
-    // deleteTaskBtn.classList.add('delete-task-button');
-
     // todo list container
     const projectTodoList = document.createElement('div');
     projectTodoList.classList.add('todo-list');
     mainArea.appendChild(projectTodoList);
 
-    // display todos of respective project
-    
+    // when "add task" button is clicked, open task dialog
+    addTaskBtn.addEventListener('click', () => {
+        taskDialog.showModal();
+    });
 
     // add todo to respect project array
+    taskForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+    })
+
+    // display todos of respective project
+    projectBtn.todos.forEach(todo => {
+        const todoItem = document.createElement('div');
+        todoItem.textContent = todo; // might have to change value later
+        projectTodoList.appendChild(todoItem);
+    });
+
+
+
+    
+    // NEED DELETE BUTTON FUNCTION FOR TASK
+    // const deleteTaskBtn = document.createElement('button');
+    // deleteTaskBtn.textContent = 'Delete';
+    // deleteTaskBtn.classList.add('delete-task-button');
+
+    // delete task functionality
 }
