@@ -84,6 +84,7 @@ h2 {
   color: #fff;
   font-weight: bold;
   height: 30px;
+  padding: 4px;
 }
 
 /******* main box ********/
@@ -91,7 +92,6 @@ h2 {
 .project-btn-header {
   display: flex;
   justify-content: space-between;
-  /* gap: 100px; */
   height: 50px;
   align-items: center;
   font-weight: bold;
@@ -102,29 +102,30 @@ h2 {
   height: 40px;
   width: 80px;
   border-radius: 6px;
-  background-color: #ff0000;
+  background-color: #00aaff;
   color: #fff;
   font-weight: bold;
 }
 
 /******** modal **********/
 /******** layout *********/
-#projectDialog {
+#projectDialog, #taskDialog {
   margin: auto;
   border-radius: 5px;
   padding: 10px;
 }
 
-#projectDialog::backdrop {
+#projectDialog::backdrop, #taskDialog::backdrop {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-#projectForm {
+#projectForm, #taskForm {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-#submitProject, #closeProject {
+#submitProject, #closeProject, #submitTask, #closeTask {
   display: flex;
   margin: 10px auto;
   height: 25px;
