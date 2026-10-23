@@ -8,6 +8,7 @@ const taskForm = document.querySelector('#taskForm');
 const taskDialog = document.querySelector('#taskDialog');
 
 let activeProject = null;
+let taskEdit = null;
 
 projectForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -101,6 +102,23 @@ function taskDisplay(task, taskContainer, project) {
     const taskPriority = document.createElement('span');
     taskPriority.textContent = `Priority: ${task.priority}`;
 
+    // edit task button
+    const editTaskBtn = document.createElement('button');
+    editTaskBtn.textContent = 'Edit';
+    editTaskBtn.classList.add('edit-task-btn');
+
+    // edit task functionality
+    editTaskBtn.addEventListener('click', () => {
+        taskEdit = task;
+
+        document.querySelector('#title').value = task.title;
+        document.querySelector('#description').value = task.description;
+        document.querySelector('#dueDate').value = task.dueDate;
+        document.querySelector('#priority').value = task.priority;
+
+        taskDialog.showModal();
+    });
+
     // task delete button
     const deleteTaskBtn = document.createElement('button');
     deleteTaskBtn.textContent = 'Delete';
@@ -119,10 +137,20 @@ function taskDisplay(task, taskContainer, project) {
     taskDiv.appendChild(taskDescription);
     taskDiv.appendChild(taskDueDate);
     taskDiv.appendChild(taskPriority);
+    taskDiv.appendChild(editTaskBtn);
     taskDiv.appendChild(deleteTaskBtn);
 
     taskContainer.appendChild(taskDiv);
+
+    // function to update task after creation
+    task.updateTask = function() {
+        taskName.textContent = `Task: ${task.title}`;
+        taskDescription.textContent = `Description: ${task.description}`;
+        taskDueDate.textContent = `Due: ${task.dueDate}`;
+        taskPriority.textContent = `Priority: ${task.priority}`;
+    };
 };
+
 // task form submission
 taskForm.addEventListener('submit', (event) => {
 
@@ -133,14 +161,29 @@ taskForm.addEventListener('submit', (event) => {
     const dueDate = document.querySelector('#dueDate').value;
     const priority = document.querySelector('#priority').value;
 
-    const newTask = {title, description, dueDate, priority};
-    activeProject.todos.push(newTask);
+    if (taskEdit) {
+        taskEdit.title = title;
+        taskEdit.description = description;
+        taskEdit.dueDate = dueDate;
+        taskEdit.priority = priority;
 
-    // places todos into proper project
-    const todoContainer = document.querySelector('.todo-list');
-    if (todoContainer) {
-        taskDisplay(newTask, todoContainer, activeProject);
-    };
+        // new text display
+        if (typeof taskEdit.updateTask === 'function') {
+            taskEdit.updateTask();
+        }
+
+        taskEdit = null;
+
+    } else {
+        const newTask = {title, description, dueDate, priority};
+        activeProject.todos.push(newTask);
+
+        // places todos into proper project
+        const todoContainer = document.querySelector('.todo-list');
+        if (todoContainer) {
+            taskDisplay(newTask, todoContainer, activeProject);
+        };
+    }
 
     taskForm.reset();
     taskDialog.close();
