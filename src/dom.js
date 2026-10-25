@@ -102,6 +102,35 @@ function taskDisplay(task, taskContainer, project) {
     const taskPriority = document.createElement('span');
     taskPriority.textContent = `Priority: ${task.priority}`;
 
+    // completion checkbox here
+    const checkBoxDiv = document.createElement('div');
+    checkBoxDiv.classList.add('task-complete');
+    const checkBoxLabel = document.createElement('label');
+    const checkBox = document.createElement('input');
+
+    checkBoxLabel.htmlFor = 'taskCheckbox';
+    checkBoxLabel.textContent = 'Complete?';
+
+    checkBox.type = 'checkbox';
+    checkBox.id = 'taskCheckbox';
+
+    checkBoxDiv.appendChild(checkBoxLabel);
+    checkBoxDiv.appendChild(checkBox);
+
+    checkBox.addEventListener('change', () => {
+        if (checkBox.checked) {
+            taskName.style.textDecoration = 'line-through';
+            taskDescription.style.textDecoration = 'line-through';
+            taskDueDate.style.textDecoration = 'line-through';
+            taskPriority.style.textDecoration = 'line-through';
+        } else {
+            taskName.style.textDecoration = 'none';
+            taskDescription.style.textDecoration = 'none';
+            taskDueDate.style.textDecoration = 'none';
+            taskPriority.style.textDecoration = 'none';
+        }
+    });
+
     // edit task button
     const editTaskBtn = document.createElement('button');
     editTaskBtn.textContent = 'Edit';
@@ -137,6 +166,7 @@ function taskDisplay(task, taskContainer, project) {
     taskDiv.appendChild(taskDescription);
     taskDiv.appendChild(taskDueDate);
     taskDiv.appendChild(taskPriority);
+    taskDiv.appendChild(checkBoxDiv);
     taskDiv.appendChild(editTaskBtn);
     taskDiv.appendChild(deleteTaskBtn);
 
@@ -188,3 +218,6 @@ taskForm.addEventListener('submit', (event) => {
     taskForm.reset();
     taskDialog.close();
 });
+
+// add function for completion true/false
+// storage JS file work to be completed
