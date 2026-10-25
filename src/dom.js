@@ -10,15 +10,14 @@ const taskDialog = document.querySelector('#taskDialog');
 let activeProject = null;
 let taskEdit = null;
 
-projectForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
+// Helper function to create and append a project
+function createProject(name) {
     const projectDiv = document.createElement('div');
     projectDiv.classList.add('project-block');
 
     const projectBtn = document.createElement('button');
     projectBtn.classList.add('project-btn');
-    projectBtn.textContent = projectNameInput.value;
+    projectBtn.textContent = name;
 
     projectDiv.appendChild(projectBtn);
     projectContainer.appendChild(projectDiv);
@@ -42,7 +41,14 @@ projectForm.addEventListener('submit', (event) => {
     projectBtn.addEventListener('click', () => {
         displayProjectTasks(projectBtn);
     });
- 
+
+    return projectBtn;
+}
+
+// Handle project form submission
+projectForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    createProject(projectNameInput.value);
     projectForm.reset();
     projectDialog.close();
 });
@@ -83,6 +89,9 @@ function openTaskDialog() {
     const taskDialog = document.querySelector('#taskDialog');
     taskDialog.showModal();
 };
+
+// Default Project Initialization
+const defaultProject = createProject('Default Project');
 
 // task display
 function taskDisplay(task, taskContainer, project) {
@@ -219,5 +228,4 @@ taskForm.addEventListener('submit', (event) => {
     taskDialog.close();
 });
 
-// add function for completion true/false
 // storage JS file work to be completed
