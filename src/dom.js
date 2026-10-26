@@ -1,3 +1,5 @@
+import {saveProjects} from "./storage.js";
+
 // dom manip that inserts project button into project container
 const projectContainer = document.querySelector('.project-container');
 const projectNameInput = document.querySelector('#proj-name');
@@ -32,6 +34,7 @@ function createProject(name) {
     deleteProjectBtn.addEventListener('click', () => {
         mainArea.innerHTML = '';
         projectDiv.remove();
+        saveProjects();
     });
 
     // creating todo array for each button
@@ -49,6 +52,7 @@ function createProject(name) {
 projectForm.addEventListener('submit', (event) => {
     event.preventDefault();
     createProject(projectNameInput.value);
+    saveProjects();
     projectForm.reset();
     projectDialog.close();
 });
@@ -89,9 +93,6 @@ function openTaskDialog() {
     const taskDialog = document.querySelector('#taskDialog');
     taskDialog.showModal();
 };
-
-// Default Project Initialization
-const defaultProject = createProject('Default Project');
 
 // task display
 function taskDisplay(task, taskContainer, project) {
@@ -138,6 +139,7 @@ function taskDisplay(task, taskContainer, project) {
             taskDueDate.style.textDecoration = 'none';
             taskPriority.style.textDecoration = 'none';
         }
+        saveProjects();
     });
 
     // edit task button
@@ -169,6 +171,7 @@ function taskDisplay(task, taskContainer, project) {
             project.todos.splice(taskIndex, 1);
         };
         taskDiv.remove();
+        saveProjects();
     });
 
     taskDiv.appendChild(taskName);
@@ -224,8 +227,32 @@ taskForm.addEventListener('submit', (event) => {
         };
     }
 
+    saveProjects();
     taskForm.reset();
     taskDialog.close();
 });
 
-// storage JS file work to be completed
+function storageFunction() {
+    const savedData = localStorage.getItem('localProjects');
+    
+    if (savedData) {
+        const projectsData = JSON.parse(savedData);
+        projectsData.forEach(projData => {
+            const projectBtn = createProject(projData.name);
+            projectBtn.todos = projData.todos || [];
+        });
+
+        // Automatically display the first project if available
+        const firstProject = document.querySelector('.project-btn');
+        if (firstProject) {
+            displayProjectTasks(firstProject);
+        }
+    } else {
+        // Fallback default project if storage is empty
+        const defaultProject = createProject('Default Project');
+        displayProjectTasks(defaultProject);
+        saveProjects();
+    }
+}
+
+storageFunction();
