@@ -127,18 +127,22 @@ function taskDisplay(task, taskContainer, project) {
     checkBoxDiv.appendChild(checkBoxLabel);
     checkBoxDiv.appendChild(checkBox);
 
+    checkBox.checked = task.completed || false;
+    if (checkBox.checked) {
+        checkBoxLineThrough(true);
+    }
+
+    function checkBoxLineThrough(isCompleted) {
+        const lineThrough = isCompleted ? 'line-through' : 'none';
+        taskName.style.textDecoration = lineThrough;
+        taskDescription.style.textDecoration = lineThrough;
+        taskDueDate.style.textDecoration = lineThrough;
+        taskPriority.style.textDecoration = lineThrough;
+    }
+
     checkBox.addEventListener('change', () => {
-        if (checkBox.checked) {
-            taskName.style.textDecoration = 'line-through';
-            taskDescription.style.textDecoration = 'line-through';
-            taskDueDate.style.textDecoration = 'line-through';
-            taskPriority.style.textDecoration = 'line-through';
-        } else {
-            taskName.style.textDecoration = 'none';
-            taskDescription.style.textDecoration = 'none';
-            taskDueDate.style.textDecoration = 'none';
-            taskPriority.style.textDecoration = 'none';
-        }
+        task.completed = checkBox.checked;
+        checkBoxLineThrough(checkBox.checked);
         saveProjects();
     });
 
