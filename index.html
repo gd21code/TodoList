@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+<script defer src="main.js"></script></head>
+<body>
+    <div class="container">
+
+        <div class="sidebar">
+            <h1>Todo List</h1><hr>
+            <h2>Projects</h2>
+            <button id="addProject" command="show-modal" commandfor="projectDialog">Add Project</button>
+            <div class="project-container">
+                <!-- generate projects in this area -->
+                <!-- add task and delete button to be attached to project -->
+            </div>
+        </div>
+
+        <div class="main">
+            <!-- generate todos in this area -->
+            <!-- header displaying project name -->
+            <!-- window displaying all tasks under respective header -->
+            <!-- edit and delete buttons to accompany tasks -->
+        </div>
+
+        <!-- modals for opening/closing of projects/tasks -->
+        <dialog id="projectDialog">
+            <form method="dialog" id="projectForm">
+                <div>
+                    <label for="proj-name">Name: </label>
+                    <input type="text" id="proj-name" name="name" required/>
+                </div>
+                <div>
+                    <button type="submit" id="submitProject">Submit</button>
+                </div>
+                <div>
+                    <button type="button" id="closeProject" command="close" commandfor="projectDialog">Close</button>
+                </div> 
+            </form>
+        </dialog>
+
+        <dialog id="taskDialog">
+            <form method="dialog" id="taskForm">
+                <div>
+                    <label for="title">Title: </label>
+                    <input type="text" id="title" name="title" required/>
+                </div>
+                <div>
+                    <label for="description">Description: </label>
+                    <input type="text" id="description" name="description"/>
+                </div>
+                <div>
+                    <label for="dueDate">Due Date: </label>
+                    <input type="date" id="dueDate" name="dueDate" reuired/>
+                </div>
+                <div>
+                    <label for="priority">Priority: </label>
+                    <select id="priority" name="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" id="submitTask">Submit</button>
+                </div>
+                <div>
+                    <button type="button" id="closeTask" command="close" commandfor="taskDialog">Close</button>
+                </div>
+            </form>
+        </dialog>
+
+    </div>
+</body>
+</html>
